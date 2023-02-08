@@ -5,7 +5,12 @@ import websocket
 
 def on_message(ws, message):
     res = json.loads(message)
-    if float(res.get('h')) - float(res.get('c')) > float(res.get('h')) / 100:
+    # Если Разница текущей максимальной цены за час и текущей цены больше чем 1% от максимальной цены за час,
+    # то выводиться 'Цена опустилась на 1 процент'
+    max_value_per_hour = float(res.get('h'))
+    current_value = float(res.get('c'))
+
+    if (max_value_per_hour - current_value) > (max_value_per_hour / 100):
         print('Цена опустилась на 1 процент')
     print(message)
 
